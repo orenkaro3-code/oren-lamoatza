@@ -13,8 +13,8 @@ export default async function handler(req, res) {
     if (await rateLimited(req, 'idea', 8, 600)) return res.status(429).json({ error: 'slow_down' });
 
     const idea = { id: randomUUID(), text, name, cat, t: Date.now() };
-    await redis.lpush('ideas', JSON.stringify(idea));
-    await redis.ltrim('ideas', 0, 1999); // keep the newest 2000
+    await redis.lpush('orenlm:ideas', JSON.stringify(idea));
+    await redis.ltrim('orenlm:ideas', 0, 1999); // keep the newest 2000
     return res.status(200).json({ ok: true });
   } catch (e) {
     console.error(e);

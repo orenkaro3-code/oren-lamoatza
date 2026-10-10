@@ -24,18 +24,18 @@ export default async function handler(req, res) {
     if (!(await isAdmin(req))) return res.status(401).json({ error: 'wrong_password' });
 
     if (req.method === 'GET') {
-      const [votes, raw] = await Promise.all([redis.get('votes'), redis.lrange('ideas', 0, 1999)]);
+      const [votes, raw] = await Promise.all([redis.get('orenlm:votes'), redis.lrange('orenlm:ideas', 0, 1999)]);
       const ideas = raw.map(parse).filter(Boolean);
       return res.status(200).json({ votes: Number(votes || 0), ideas });
     }
 
     if (req.method === 'DELETE') {
       const id = String(req.query.id || '');
-      const raw = await redis.lrange('ideas', 0, 1999);
+      const raw = await redis.lrange('orenlm:ideas', 0, 1999);
       for (const item of raw) {
         const idea = parse(item);
         if (idea && idea.id === id) {
-          await redis.lrem('ideas', 1, typeof item === 'string' ? item : JSON.stringify(item));
+          await redis.lrem('orenlm:ideas', 1, typeof item === 'string' ? item : JSON.stringify(item));
           break;
         }
       }
