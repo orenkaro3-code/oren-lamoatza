@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="אורן למועצת התלמידים. אתם מחליטים, אורן מבצע.">
+<meta property="og:title" content="אורן למועצה">
+<meta property="og:description" content="אתם מחליטים. אורן מבצע.">
+<meta property="og:image" content="/poster.jpg">
+<title>אורן למועצה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Karantina:wght@700&family=Rubik:wght@400;500;700;900&display=swap">
+<style>
+/* Layout: a school-election street poster that scrolls. Paper, ink, highlighter yellow, sticker red, marker blue; giant condensed headlines, rotated stickers, a ticker band, RTL throughout. One committed look (single theme). */
+:root {
+  color-scheme: light;
+  --paper: #F4EFE6;
+  --paper-2: #EAE3D6;
+  --ink: #161616;
+  --ink-soft: #4E493F;
+  --yellow: #FFD400;
+  --red: #FF4B2B;
+  --blue: #2F6BFF;
+  --line: #D8D0C2;
+  --display: "Karantina", "Arial Narrow", "Arial", sans-serif;
+  --body: "Rubik", "Arial", "Helvetica", sans-serif;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 18px; line-height: 1.6; overflow-x: hidden; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.wrap { max-width: 1120px; margin-inline: auto; padding-inline: max(16px, 4vw); }
+.d { font-family: var(--display); font-weight: 700; line-height: .9; margin: 0; text-wrap: balance; letter-spacing: .005em; }
+.eyebrow { font-weight: 500; font-size: .9rem; letter-spacing: .12em; margin: 0; }
+.hl { background: var(--yellow); padding: .02em .18em 0; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 54px; padding: .7rem 1.4rem; border: 3px solid var(--ink); background: var(--paper); color: var(--ink); font: 900 1.05rem var(--body); text-decoration: none; cursor: pointer; box-shadow: 5px 5px 0 var(--ink); transition: transform .15s, box-shadow .15s; }
+.btn:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ink); }
+.btn:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--ink); }
+.btn.y { background: var(--yellow); }
+.btn.r { background: var(--red); color: var(--paper); }
+.deco { position: absolute; pointer-events: none; }
+
+/* top bar */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--ink); color: var(--paper); border-bottom: 6px solid var(--yellow); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .6rem; }
+.logo { font-family: var(--display); font-size: 2.2rem; line-height: 1; text-decoration: none; }
+.logo span { color: var(--yellow); }
+.top nav { display: flex; gap: 1.1rem; flex-wrap: wrap; font-weight: 500; font-size: .95rem; }
+.top nav a { text-decoration: none; }
+.top nav a:hover { color: var(--yellow); }
+
+/* hero */
+.hero { position: relative; padding-block: clamp(28px, 6vw, 72px) clamp(40px, 7vw, 90px); overflow: hidden; }
+.hero-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: clamp(24px, 4vw, 56px); align-items: center; position: relative; z-index: 1; }
+.hero-copy { display: grid; gap: 1rem; min-width: 0; justify-items: start; }
+.hero h1 { font-size: clamp(9rem, 30vw, 19rem); }
+.slogan { font-family: var(--display); font-size: clamp(2.8rem, 8vw, 5.4rem); line-height: 1; margin: 0; }
+.lead { font-size: 1.15rem; color: var(--ink-soft); max-width: 32rem; margin: 0; }
+.ctas { display: flex; gap: .9rem; flex-wrap: wrap; margin-top: .6rem; }
+.sticker { position: absolute; z-index: 2; background: var(--red); color: var(--paper); font-weight: 900; font-size: clamp(1rem, 2.4vw, 1.5rem); padding: .55rem 1.1rem; transform: rotate(-7deg); box-shadow: 4px 4px 0 var(--ink); }
+.phone { position: relative; justify-self: center; width: min(100%, 320px); }
+.phone .frame { border: 10px solid var(--ink); border-radius: 38px; overflow: hidden; background: var(--ink); transform: rotate(2.5deg); box-shadow: 14px 14px 0 var(--blue); }
+.phone video { display: block; width: 100%; aspect-ratio: 9 / 16; object-fit: cover; }
+.sound { margin-top: 1.1rem; width: 100%; }
+.tape { position: absolute; width: 120px; height: 34px; background: rgba(255, 212, 0, .85); z-index: 3; }
+
+/* ticker */
+.ticker { background: var(--ink); color: var(--yellow); overflow: hidden; border-block: 4px solid var(--ink); transform: rotate(-1.2deg); margin-inline: -20px; }
+.ticker-track { display: flex; width: max-content; animation: tick 28s linear infinite; }
+.ticker span { font-family: var(--display); font-size: clamp(2rem, 5vw, 3rem); padding: .3rem 1.2rem; white-space: nowrap; }
+.ticker span b { color: var(--red); font-weight: 400; padding-inline-start: 1.2rem; }
+@keyframes tick { to { transform: translateX(50%); } }
+
+/* statement */
+.statement { background: var(--yellow); position: relative; overflow: hidden; padding-block: clamp(56px, 9vw, 110px); }
+.statement p { font-weight: 700; font-size: 1.3rem; margin: 0 0 .4rem; }
+.statement .d { font-size: clamp(4.2rem, 13vw, 9.5rem); }
+.statement .strike { text-decoration: line-through; text-decoration-color: var(--red); text-decoration-thickness: .09em; }
+.statement .sub { font-weight: 500; font-size: 1.15rem; margin-top: 1.4rem; color: #3D3500; }
+
+/* sections */
+section.block { padding-block: clamp(56px, 9vw, 110px); position: relative; overflow: hidden; }
+.head { display: grid; gap: .3rem; margin-bottom: clamp(28px, 4vw, 48px); position: relative; z-index: 1; }
+.head .d { font-size: clamp(3.4rem, 9vw, 6.4rem); }
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(16px, 3vw, 32px); position: relative; z-index: 1; }
+.step { border-top: 7px solid var(--ink); padding-top: 1rem; display: grid; gap: .3rem; align-content: start; min-width: 0; }
+.step:last-child { border-color: var(--yellow); }
+.step .n { font-family: var(--display); font-size: 4.6rem; line-height: 1; color: var(--red); }
+.step h3 { margin: 0; font-size: 1.35rem; font-weight: 900; }
+.step p { margin: 0; color: var(--ink-soft); }
+
+.dark { background: var(--ink); color: var(--paper); }
+.dark .eyebrow { color: var(--yellow); }
+.ways { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); position: relative; z-index: 1; }
+.way { padding: .4rem clamp(16px, 3vw, 36px); display: grid; gap: .6rem; align-content: start; min-width: 0; }
+.way + .way { border-inline-start: 2px solid #3A3A3A; }
+.way:first-child { padding-inline-start: 0; }
+.way h3 { font-family: var(--display); font-size: clamp(2.6rem, 5vw, 3.6rem); line-height: 1; margin: 0; }
+.way p { margin: 0; color: #C9C3B6; }
+
+.redsec { background: var(--red); }
+.list-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(24px, 5vw, 64px); align-items: center; position: relative; z-index: 1; }
+.note { background: var(--paper); padding: clamp(18px, 3vw, 36px) clamp(18px, 3vw, 44px); transform: rotate(-1.3deg); box-shadow: 0 22px 44px rgba(0,0,0,.25); position: relative; }
+.note ul { list-style: none; margin: 0; padding: 0; }
+.note li { display: flex; align-items: center; gap: 1rem; padding-block: 1rem; border-bottom: 2px solid var(--line); font-weight: 700; font-size: 1.15rem; }
+.note li:last-child { border-bottom: 0; color: #8A8274; }
+.box { flex: none; width: 34px; height: 34px; border: 3px solid var(--ink); display: grid; place-items: center; }
+.box svg { width: 26px; height: 26px; }
+
+/* idea form */
+.idea-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(24px, 5vw, 64px); align-items: start; position: relative; z-index: 1; }
+form { display: grid; gap: 1.1rem; background: #FFFCF5; border: 3px solid var(--ink); padding: clamp(18px, 3vw, 32px); box-shadow: 10px 10px 0 var(--yellow); }
+label, legend { font-weight: 700; }
+fieldset { border: 0; margin: 0; padding: 0; display: grid; gap: .6rem; }
+.chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.chips input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.chips label { padding: .45rem 1rem; border: 2px solid var(--ink); cursor: pointer; font-weight: 500; background: var(--paper); }
+.chips input:checked + label { background: var(--ink); color: var(--yellow); }
+.chips input:focus-visible + label { outline: 3px solid var(--blue); outline-offset: 2px; }
+textarea, input[type=text] { font: inherit; width: 100%; padding: .8rem 1rem; border: 2px solid var(--ink); background: var(--paper); color: var(--ink); border-radius: 0; }
+textarea { min-height: 130px; resize: vertical; }
+.field { display: grid; gap: .4rem; }
+.small { font-size: .9rem; color: var(--ink-soft); margin: 0; }
+.err { color: #B3260C; font-weight: 700; margin: 0; }
+.out { display: grid; gap: .6rem; background: var(--yellow); border: 3px solid var(--ink); padding: 1rem; }
+.out p { margin: 0; white-space: pre-wrap; }
+.row { display: flex; gap: .7rem; flex-wrap: wrap; }
+
+/* promise + vote */
+.promise .d { font-size: clamp(3.8rem, 11vw, 8.2rem); }
+.vote { background: var(--yellow); text-align: center; position: relative; overflow: hidden; padding-block: clamp(64px, 10vw, 130px); }
+.vote .d { font-size: clamp(5.5rem, 19vw, 14rem); position: relative; z-index: 1; }
+.vote .tag { display: inline-block; background: var(--ink); color: var(--paper); font-weight: 900; font-size: clamp(1.3rem, 3.5vw, 2.1rem); padding: .6rem 1.4rem; transform: rotate(-2deg); position: relative; z-index: 1; }
+.vote .ctas { justify-content: center; margin-top: 2rem; position: relative; z-index: 1; }
+.cheer { font-weight: 700; margin: 1rem 0 0; min-height: 1.6em; position: relative; z-index: 1; }
+#fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
+footer { background: var(--ink); color: #C9C3B6; padding-block: 2rem 3rem; font-size: .95rem; }
+footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+footer b { color: var(--yellow); font-family: var(--display); font-size: 1.8rem; font-weight: 700; }
+
+/* admin */
+#adminTap { cursor: default; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
+dialog#admin { width: min(760px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); border: 4px solid var(--ink); padding: clamp(16px, 3vw, 28px); background: var(--paper); color: var(--ink); box-shadow: 12px 12px 0 var(--yellow); }
+dialog#admin::backdrop { background: rgba(22, 22, 22, .7); }
+.adm-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.adm-head .d { font-size: 3.4rem; }
+.adm-head .btn { min-height: 44px; padding: .3rem .9rem; box-shadow: 3px 3px 0 var(--ink); }
+.adm-login { display: grid; gap: .7rem; max-width: 360px; box-shadow: none; }
+.adm-login input { font: inherit; padding: .7rem 1rem; border: 2px solid var(--ink); background: #FFFCF5; }
+.adm-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 1rem; }
+.stat { background: var(--ink); color: var(--paper); padding: 1rem 1.2rem; display: grid; gap: .1rem; }
+.stat .num { font-family: var(--display); font-size: 4.6rem; line-height: 1; color: var(--yellow); font-variant-numeric: tabular-nums; }
+.stat:nth-child(2) .num { color: #7FA4FF; }
+.adm-bar { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; margin-bottom: .8rem; }
+.adm-bar select { font: inherit; padding: .5rem .8rem; border: 2px solid var(--ink); background: #FFFCF5; }
+.adm-bar .btn { min-height: 44px; padding: .4rem 1rem; box-shadow: 3px 3px 0 var(--ink); }
+.adm-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.adm-list li { background: #FFFCF5; border: 2px solid var(--ink); padding: .8rem 1rem; display: grid; gap: .3rem; }
+.adm-list .meta { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; font-size: .85rem; color: var(--ink-soft); }
+.adm-list .cat { background: var(--yellow); color: var(--ink); font-weight: 700; padding: .05rem .5rem; }
+.adm-list .txt { margin: 0; font-weight: 500; white-space: pre-wrap; overflow-wrap: anywhere; }
+.adm-list .del { margin-inline-start: auto; background: none; border: 0; color: #B3260C; font: 700 .85rem var(--body); cursor: pointer; text-decoration: underline; }
+
+@media (max-width: 860px) {
+  .hero-grid, .list-grid, .idea-grid { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ways { grid-template-columns: 1fr; gap: 1.6rem; }
+  .way { padding-inline: 0; }
+  .way + .way { border-inline-start: 0; border-top: 2px solid #3A3A3A; padding-top: 1.4rem; }
+  .top nav { display: none; }
+  .deco.hide-sm { display: none; }
+}
+@media (max-width: 460px) { .steps { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .ticker-track { animation: none; }
+  .btn { transition: none; }
+}
+</style>
+</head>
+<body>
+<div dir="rtl" lang="he">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <polygon id="star" points="50,4 62,38 98,38 69,60 80,95 50,74 20,95 31,60 2,38 38,38"/>
+    <polygon id="burst" points="50,2 59,17 74,8 74,26 92,26 83,41 98,50 83,59 92,74 74,74 74,92 59,83 50,98 41,83 26,92 26,74 8,74 17,59 2,50 17,41 8,26 26,26 26,8 41,17"/>
+    <path id="squig" d="M6 40 Q31 6 56 32 T106 32 T156 32 T206 32 T256 32 T294 28" fill="none" stroke-width="10" stroke-linecap="round"/>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="#top">אורן <span>למועצה</span></a>
+    <nav aria-label="ניווט">
+      <a href="#video">הסרטון</a>
+      <a href="#how">איך זה עובד</a>
+      <a href="#list">הרשימה</a>
+      <a href="#idea">יש לי רעיון</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <svg class="deco hide-sm" viewBox="0 0 100 100" style="left:3%;top:8%;width:120px;transform:rotate(-10deg)" aria-hidden="true"><use href="#burst" fill="var(--blue)"/></svg>
+    <svg class="deco" viewBox="0 0 100 100" style="left:42%;bottom:6%;width:70px;transform:rotate(14deg)" aria-hidden="true"><use href="#star" fill="var(--red)"/></svg>
+    <svg class="deco hide-sm" viewBox="0 0 300 60" style="right:4%;bottom:5%;width:240px;transform:rotate(-3deg)" aria-hidden="true"><use href="#squig" stroke="var(--blue)"/></svg>
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">בחירות למועצת התלמידים</p>
+        <h1 class="d" id="adminTap">אורן</h1>
+        <p class="slogan"><span class="hl">אתם מחליטים. אורן מבצע</span></p>
+        <p class="lead">זאת לא עוד מועצת תלמידים שגרתית. זאת מועצה שאתם הולכים להיות בה, ושכל רעיון של תלמיד מקבל בה תשובה.</p>
+        <div class="ctas">
+          <a class="btn y" href="#idea">יש לי רעיון</a>
+          <a class="btn" href="#video">לסרטון</a>
+        </div>
+      </div>
+      <div class="phone" id="video">
+        <span class="sticker" style="top:-14px;right:-10px">למועצה שלכם</span>
+        <span class="tape" style="bottom:28%;left:-34px;transform:rotate(-24deg)"></span>
+        <div class="frame">
+          <video id="reel" src="reel.mp4" poster="poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="סרטון הבחירות של אורן"></video>
+        </div>
+        <button class="btn sound" id="soundBtn" type="button" aria-pressed="false">הפעלת סאונד</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track" id="track"></div>
+  </div>
+
+  <section class="statement">
+    <svg class="deco" viewBox="0 0 100 100" style="left:4%;top:12%;width:150px;transform:rotate(-8deg)" aria-hidden="true"><use href="#burst" fill="var(--blue)"/></svg>
+    <svg class="deco hide-sm" viewBox="0 0 100 100" style="left:18%;bottom:14%;width:64px" aria-hidden="true"><use href="#star" fill="var(--paper)" stroke="var(--ink)" stroke-width="4"/></svg>
+    <div class="wrap" style="position:relative;z-index:1">
+      <p>זאת לא עוד</p>
+      <h2 class="d"><span class="strike">מועצת תלמידים</span><br>זאת המועצה שלכם</h2>
+      <p class="sub">אתם לא רק בוחרים בה. אתם הולכים להיות בתוכה.</p>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <svg class="deco" viewBox="0 0 100 100" style="left:4%;top:9%;width:90px;transform:rotate(-12deg)" aria-hidden="true"><use href="#star" fill="var(--blue)"/></svg>
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow" style="color:var(--red)">הרעיונות שלכם</p>
+        <h2 class="d">יש לך רעיון? <span class="hl">אני מקדם אותו</span></h2>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">1</span><h3>אתם מציעים</h3><p>כל תלמיד, מכל כיתה, דרך הטופס כאן למטה.</p></div>
+        <div class="step"><span class="n">2</span><h3>כולם מצביעים</h3><p>סקר פתוח לכל בית הספר, כדי לדעת מה הכי בוער.</p></div>
+        <div class="step"><span class="n">3</span><h3>אני דוחף בהנהלה</h3><p>ולא מוותר עד שיש תשובה ברורה.</p></div>
+        <div class="step"><span class="n">4</span><h3><span class="hl">זה קורה</span></h3><p>ואתם רואים את זה בעיניים.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block dark">
+    <svg class="deco" viewBox="0 0 100 100" style="left:3%;top:8%;width:120px;transform:rotate(10deg)" aria-hidden="true"><use href="#burst" fill="var(--blue)"/></svg>
+    <svg class="deco hide-sm" viewBox="0 0 300 60" style="left:4%;bottom:8%;width:220px;transform:rotate(-2deg)" aria-hidden="true"><use href="#squig" stroke="var(--red)"/></svg>
+    <div class="wrap">
+      <div class="head">
+        <p class="eyebrow">איך זה יעבוד</p>
+        <h2 class="d">שלוש דרכים שבהן אתם בפנים</h2>
+      </div>
+      <div class="ways">
+        <div class="way"><h3 style="color:var(--yellow)">קול לכל תלמיד</h3><p>סקרים ותיבת רעיונות דיגיטלית. כל רעיון מקבל תשובה.</p></div>
+        <div class="way"><h3 style="color:#7FA4FF">ישיבות פתוחות</h3><p>כל מי שרוצה יכול להצטרף לוועדה ולקחת חלק.</p></div>
+        <div class="way"><h3 style="color:#FF7A5E">הכל שקוף</h3><p>כל החלטה מתפרסמת לכולם, בלי סודות.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block redsec" id="list">
+    <svg class="deco" viewBox="0 0 100 100" style="right:3%;bottom:6%;width:130px;transform:rotate(14deg)" aria-hidden="true"><use href="#burst" fill="var(--yellow)"/></svg>
+    <div class="wrap list-grid">
+      <div class="head" style="margin:0">
+        <p class="eyebrow">מה נעשה ביחד</p>
+        <h2 class="d" style="font-size:clamp(4rem,11vw,7.5rem)">הרשימה שלנו</h2>
+        <p style="margin:0;color:#2A0F08;font-weight:500">רעיונות לפתיחה. את השאר אתם מביאים.</p>
+      </div>
+      <div class="note">
+        <span class="tape" style="top:-16px;right:18%;transform:rotate(8deg)"></span>
+        <span class="tape" style="top:-16px;left:14%;transform:rotate(-10deg);background:rgba(47,107,255,.7)"></span>
+        <ul>
+          <li><span class="box"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6" fill="none" stroke="var(--red)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>ימי כיף שהתלמידים בוחרים</li>
+          <li><span class="box"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6" fill="none" stroke="var(--red)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>תיבת רעיונות דיגיטלית לכל השכבות</li>
+          <li><span class="box"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6" fill="none" stroke="var(--red)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>הפסקות עם משחקים ומוזיקה</li>
+          <li><span class="box"></span>הרעיון הבא שלכם</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="idea">
+    <svg class="deco" viewBox="0 0 100 100" style="left:3%;top:6%;width:80px;transform:rotate(-14deg)" aria-hidden="true"><use href="#star" fill="var(--red)"/></svg>
+    <svg class="deco hide-sm" viewBox="0 0 300 60" style="left:6%;top:16%;width:200px;transform:rotate(-6deg)" aria-hidden="true"><use href="#squig" stroke="var(--blue)"/></svg>
+    <div class="wrap idea-grid">
+      <div class="head">
+        <p class="eyebrow" style="color:var(--red)">תיבת הרעיונות</p>
+        <h2 class="d">מה <span class="hl">אתם</span> רוצים שיקרה?</h2>
+        <p class="lead">כותבים רעיון, בוחרים נושא ושולחים. כל רעיון שמגיע נכנס לרשימה של אורן ומקבל תשובה.</p>
+      </div>
+      <form id="ideaForm" novalidate>
+        <fieldset>
+          <legend>על מה הרעיון?</legend>
+          <div class="chips">
+            <input type="radio" name="cat" id="c1" value="כיף ואירועים" checked><label for="c1">כיף ואירועים</label>
+            <input type="radio" name="cat" id="c2" value="הפסקות"><label for="c2">הפסקות</label>
+            <input type="radio" name="cat" id="c3" value="ספורט"><label for="c3">ספורט</label>
+            <input type="radio" name="cat" id="c4" value="לימודים"><label for="c4">לימודים</label>
+            <input type="radio" name="cat" id="c5" value="משהו אחר"><label for="c5">משהו אחר</label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="ideaText">הרעיון שלי</label>
+          <textarea id="ideaText" name="idea" maxlength="500" placeholder="למשל: טורניר כדורגל בין השכבות בסוף כל חודש"></textarea>
+        </div>
+        <div class="field">
+          <label for="ideaName">שם פרטי וכיתה (לא חובה)</label>
+          <input type="text" id="ideaName" name="name" maxlength="40" placeholder="למשל: נועה, ח׳2">
+        </div>
+        <p class="small">בלי מספרי טלפון, כתובות או פרטים אישיים, רק הרעיון.</p>
+        <p class="err" id="ideaErr" hidden>כתבו את הרעיון לפני השליחה.</p>
+        <button class="btn r" type="submit" id="ideaSend">שליחת הרעיון</button>
+        <div class="out" id="out" role="status" hidden><p id="outText"></p></div>
+      </form>
+    </div>
+  </section>
+
+  <section class="block promise" style="background:var(--paper-2)">
+    <svg class="deco" viewBox="0 0 100 100" style="left:3%;bottom:8%;width:200px;transform:rotate(-6deg)" aria-hidden="true"><use href="#burst" fill="var(--blue)"/></svg>
+    <svg class="deco" viewBox="0 0 100 100" style="left:16%;bottom:30%;width:70px;transform:rotate(16deg)" aria-hidden="true"><use href="#star" fill="var(--red)"/></svg>
+    <div class="wrap" style="position:relative;z-index:1">
+      <p class="eyebrow" style="color:var(--red);margin-bottom:.6rem">ההבטחה שלי</p>
+      <h2 class="d">אני לא אחליט בשבילכם<br><span class="hl">אני אחליט איתכם</span></h2>
+    </div>
+  </section>
+
+  <section class="vote" id="vote">
+    <svg class="deco" viewBox="0 0 100 100" style="left:4%;top:10%;width:150px;transform:rotate(-10deg)" aria-hidden="true"><use href="#burst" fill="var(--blue)"/></svg>
+    <svg class="deco" viewBox="0 0 100 100" style="right:5%;top:12%;width:100px;transform:rotate(14deg)" aria-hidden="true"><use href="#star" fill="var(--red)"/></svg>
+    <svg class="deco hide-sm" viewBox="0 0 100 100" style="right:8%;bottom:12%;width:90px" aria-hidden="true"><use href="#burst" fill="var(--red)"/></svg>
+    <div class="wrap">
+      <p style="font-weight:700;font-size:1.3rem;margin:0 0 .4rem;position:relative;z-index:1">ביום הבחירות</p>
+      <h2 class="d">תבחרו באורן</h2>
+      <p style="margin-top:1.4rem"><span class="tag">אתם מחליטים. אורן מבצע</span></p>
+      <div class="ctas">
+        <button class="btn r" type="button" id="cheerBtn">אני מצביע לאורן</button>
+        <button class="btn" type="button" id="shareBtn">העתקת הקישור לאתר</button>
+      </div>
+      <p class="cheer" id="cheer" role="status"></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>אורן למועצה</b>
+    <span>אתם מחליטים. אורן מבצע · בחירות למועצת התלמידים</span>
+  </div>
+</footer>
+
+<dialog id="admin" aria-labelledby="adminTitle">
+  <div class="adm-head">
+    <h2 class="d" id="adminTitle">חדר המטה</h2>
+    <button class="btn" type="button" id="admClose" aria-label="סגירה">✕</button>
+  </div>
+  <form id="admLogin" class="adm-login" novalidate>
+    <p class="small" id="admSetupNote" hidden>פעם ראשונה כאן. בחרו סיסמה (לפחות 6 תווים). רק מי שיודע אותה יראה את הרעיונות והקולות.</p>
+    <label for="admPass" id="admPassLabel">סיסמת אדמין</label>
+    <input type="password" id="admPass" autocomplete="current-password">
+    <label for="admPass2" id="admPass2Label" hidden>שוב, לאישור</label>
+    <input type="password" id="admPass2" autocomplete="new-password" hidden>
+    <p class="err" id="admErr" hidden></p>
+    <button class="btn y" type="submit">כניסה</button>
+  </form>
+  <div id="admBoard" hidden>
+    <div class="adm-stats">
+      <div class="stat"><span class="num" id="stVotes">0</span><span>לחצו "אני מצביע לאורן"</span></div>
+      <div class="stat"><span class="num" id="stIdeas">0</span><span>רעיונות שהתקבלו</span></div>
+    </div>
+    <div class="adm-bar">
+      <label for="admFilter">נושא</label>
+      <select id="admFilter"><option value="">הכל</option></select>
+      <button class="btn" type="button" id="admRefresh">רענון</button>
+    </div>
+    <ol class="adm-list" id="admList"></ol>
+    <p class="small" id="admEmpty" hidden>עוד לא הגיעו רעיונות. שתפו את הקישור בקבוצת הכיתה.</p>
+  </div>
+</dialog>
+
+<canvas id="fx" aria-hidden="true"></canvas>
+</div>
+
+<script>
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ticker */
+  var track = document.getElementById('track'), phrase = '<span>אתם מחליטים. אורן מבצע<b>★</b></span><span>הרעיונות שלכם<b>★</b></span><span>המועצה שלכם<b>★</b></span>';
+  var h = ''; for (var i = 0; i < 6; i++) h += phrase; track.innerHTML = h;
+
+  /* video sound */
+  var v = document.getElementById('reel'), sb = document.getElementById('soundBtn');
+  if (reduce) { v.removeAttribute('autoplay'); v.pause(); }
+  sb.addEventListener('click', function () {
+    v.muted = !v.muted;
+    if (!v.muted) { v.currentTime = 0; v.play().catch(function () {}); }
+    sb.textContent = v.muted ? 'הפעלת סאונד' : 'השתקה';
+    sb.setAttribute('aria-pressed', String(!v.muted));
+  });
+
+  /* copy helper */
+  function copy(text, el, done) {
+    function sel() { if (!el) return; var r = document.createRange(); r.selectNodeContents(el); var s = getSelection(); s.removeAllRanges(); s.addRange(r); done('הטקסט מסומן. אפשר להעתיק אותו.'); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { done('הועתק'); }, sel); else sel();
+  }
+
+  function api(path, opts) {
+    return fetch(path, opts).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (b) { if (!r.ok) { var e = new Error(b.error || 'error'); e.status = r.status; throw e; } return b; });
+    });
+  }
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+
+  /* idea form -> saved on the server */
+  var form = document.getElementById('ideaForm'), out = document.getElementById('out'), outText = document.getElementById('outText'), err = document.getElementById('ideaErr'), send = document.getElementById('ideaSend');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = form.elements, idea = f.idea.value.trim(), name = f.name.value.trim();
+    if (!idea) { err.textContent = 'כתבו את הרעיון לפני השליחה.'; err.hidden = false; f.idea.focus(); return; }
+    err.hidden = true; send.disabled = true; send.textContent = 'שולח...';
+    api('/api/idea', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: idea, cat: f.cat.value, name: name }) })
+      .then(function () {
+        outText.textContent = 'הרעיון נשלח לאורן. תודה! רוצים להוסיף עוד אחד?';
+        out.hidden = false; f.idea.value = '';
+        burst(innerWidth / 2, innerHeight / 2, 80);
+      })
+      .catch(function (x) {
+        err.textContent = x.status === 429 ? 'שלחתם הרבה רעיונות בבת אחת. נסו שוב בעוד כמה דקות.'
+          : (x.status === 503 || x.status === 404) ? 'תיבת הרעיונות עוד לא פעילה. נסו שוב מאוחר יותר.'
+          : 'הרעיון לא נשלח, כנראה בעיית חיבור. נסו שוב.';
+        err.hidden = false;
+      })
+      .finally(function () { send.disabled = false; send.textContent = 'שליחת הרעיון'; });
+  });
+
+  /* vote button: counts once per browser */
+  var cheerEl = document.getElementById('cheer'), voteBtn = document.getElementById('cheerBtn');
+  var cheers = ['יאללה! ספרו לחבר שיצביע גם', 'אתם מחליטים. אורן מבצע', 'נתראה בקלפי'], ci = 0;
+  if (store('oren-voted')) { voteBtn.textContent = 'אתם איתי! תודה'; }
+  voteBtn.addEventListener('click', function (e) {
+    var r = e.currentTarget.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top, 120);
+    if (store('oren-voted')) { cheerEl.textContent = cheers[ci++ % cheers.length]; return; }
+    voteBtn.disabled = true;
+    api('/api/vote', { method: 'POST' })
+      .then(function () { store('oren-voted', '1'); voteBtn.textContent = 'אתם איתי! תודה'; cheerEl.textContent = 'נספר! עכשיו ספרו לחבר שיצביע גם'; })
+      .catch(function () { cheerEl.textContent = 'לא הצלחנו לספור את הלחיצה. נסו שוב עוד רגע.'; })
+      .finally(function () { voteBtn.disabled = false; });
+  });
+
+  /* admin: 5 quick taps on the big name open the password box */
+  var dlg = document.getElementById('admin'), taps = 0, tapTimer, adminKey = '';
+  try { adminKey = sessionStorage.getItem('oren-admin') || ''; } catch (e) {}
+  document.getElementById('adminTap').addEventListener('click', function () {
+    taps++; clearTimeout(tapTimer); tapTimer = setTimeout(function () { taps = 0; }, 1500);
+    if (taps >= 5) { taps = 0; openAdmin(); }
+  });
+  document.getElementById('admClose').addEventListener('click', function () { dlg.close(); });
+  var setupMode = false;
+  function setSetup(on) {
+    setupMode = on;
+    ['admSetupNote', 'admPass2Label', 'admPass2'].forEach(function (id) { document.getElementById(id).hidden = !on; });
+    document.getElementById('admPassLabel').textContent = on ? 'סיסמה חדשה' : 'סיסמת אדמין';
+    document.querySelector('#admLogin button[type=submit]').textContent = on ? 'שמירת הסיסמה' : 'כניסה';
+  }
+  function openAdmin() {
+    if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+    if (adminKey) { loadBoard(); return; }
+    api('/api/admin?check=1').then(function (d) { setSetup(d.state === 'unset'); showLogin(); })
+      .catch(function (x) { setSetup(false); showLogin(x.message === 'no_db' ? 'המאגר עוד לא מחובר. ב-Vercel: Storage, Create Database, Upstash for Redis, Connect, ואז Redeploy.' : ''); });
+  }
+  function showLogin(msg) {
+    document.getElementById('admLogin').hidden = false; document.getElementById('admBoard').hidden = true;
+    var e = document.getElementById('admErr'); e.hidden = !msg; e.textContent = msg || '';
+    setTimeout(function () { document.getElementById('admPass').focus(); }, 30);
+  }
+  document.getElementById('admLogin').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var p1 = document.getElementById('admPass').value;
+    if (setupMode) {
+      if (p1.length < 6) { showLogin('הסיסמה צריכה להיות לפחות 6 תווים.'); return; }
+      if (p1 !== document.getElementById('admPass2').value) { showLogin('שתי הסיסמאות לא זהות.'); return; }
+      api('/api/admin?setup=1', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: p1 }) })
+        .then(function () { setSetup(false); adminKey = p1; loadBoard(); })
+        .catch(function (x) { if (x.status === 409) { setSetup(false); showLogin('כבר הוגדרה סיסמה. היכנסו איתה.'); } else showLogin('לא הצלחנו לשמור. נסו שוב.'); });
+      return;
+    }
+    adminKey = p1;
+    loadBoard();
+  });
+  var allIdeas = [];
+  function loadBoard() {
+    api('/api/admin', { headers: { 'x-admin-key': adminKey } })
+      .then(function (d) {
+        try { sessionStorage.setItem('oren-admin', adminKey); } catch (e) {}
+        document.getElementById('admLogin').hidden = true; document.getElementById('admBoard').hidden = false;
+        document.getElementById('stVotes').textContent = d.votes;
+        document.getElementById('stIdeas').textContent = d.ideas.length;
+        allIdeas = d.ideas;
+        var sel = document.getElementById('admFilter'), cur = sel.value, cats = {};
+        d.ideas.forEach(function (i) { cats[i.cat] = (cats[i.cat] || 0) + 1; });
+        sel.innerHTML = '<option value="">הכל (' + d.ideas.length + ')</option>';
+        Object.keys(cats).forEach(function (c) { var o = document.createElement('option'); o.value = c; o.textContent = c + ' (' + cats[c] + ')'; sel.appendChild(o); });
+        sel.value = cats[cur] ? cur : '';
+        renderIdeas();
+      })
+      .catch(function (x) {
+        adminKey = ''; try { sessionStorage.removeItem('oren-admin'); } catch (e) {}
+        var msg = x.status === 401 ? 'הסיסמה לא נכונה.'
+          : x.message === 'no_db' ? 'המאגר עוד לא מחובר. ב-Vercel: Storage, Create Database, Upstash for Redis, Connect, ואז Redeploy.'
+          : x.status === 404 ? 'השרת לא נמצא. ודאו שתיקיית api הועלתה לריפו ושהפרויקט ב-Vercel פרוס מחדש.'
+          : 'לא הצלחנו לטעון את הנתונים. נסו שוב.';
+        showLogin(msg);
+      });
+  }
+  function renderIdeas() {
+    var f = document.getElementById('admFilter').value, list = document.getElementById('admList');
+    var items = allIdeas.filter(function (i) { return !f || i.cat === f; });
+    list.textContent = '';
+    document.getElementById('admEmpty').hidden = items.length > 0;
+    items.forEach(function (i) {
+      var li = document.createElement('li'), meta = document.createElement('div'), cat = document.createElement('span'), who = document.createElement('span'), del = document.createElement('button'), txt = document.createElement('p');
+      meta.className = 'meta'; cat.className = 'cat'; cat.textContent = i.cat;
+      who.textContent = (i.name || 'בלי שם') + ' · ' + new Date(i.t).toLocaleString('he-IL', { day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' });
+      del.className = 'del'; del.type = 'button'; del.textContent = 'מחיקה';
+      del.addEventListener('click', function () {
+        if (del.dataset.sure !== '1') { del.dataset.sure = '1'; del.textContent = 'בטוח? לחצו שוב'; return; }
+        api('/api/admin?id=' + encodeURIComponent(i.id), { method: 'DELETE', headers: { 'x-admin-key': adminKey } }).then(loadBoard).catch(function () { del.textContent = 'המחיקה נכשלה'; });
+      });
+      txt.className = 'txt'; txt.textContent = i.text;
+      meta.append(cat, who, del); li.append(meta, txt); list.appendChild(li);
+    });
+  }
+  document.getElementById('admFilter').addEventListener('change', renderIdeas);
+  document.getElementById('admRefresh').addEventListener('click', loadBoard);
+  document.getElementById('shareBtn').addEventListener('click', function () {
+    var b = this; copy(location.href.split('#')[0], null, function (m) { b.textContent = m === 'הועתק' ? 'הקישור הועתק' : 'אפשר להעתיק מהשורת כתובת'; setTimeout(function () { b.textContent = 'העתקת הקישור לאתר'; }, 2400); });
+  });
+
+  /* confetti */
+  var c = document.getElementById('fx'), ctx = c.getContext('2d'), P = [], running = false;
+  var COLS = ['#FFD400', '#FF4B2B', '#2F6BFF', '#161616', '#F4EFE6'];
+  function size() { var d = Math.min(devicePixelRatio || 1, 2); c.width = innerWidth * d; c.height = innerHeight * d; ctx.setTransform(d, 0, 0, d, 0, 0); }
+  size(); addEventListener('resize', size);
+  function burst(x, y, n) {
+    if (reduce) return;
+    for (var i = 0; i < n; i++) {
+      var a = Math.random() * Math.PI * 2, s = 4 + Math.random() * 9;
+      P.push({ x: x, y: y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 6, r: Math.random() * 6, vr: (Math.random() - .5) * .4, w: 8 + Math.random() * 10, c: COLS[i % 5], life: 0 });
+    }
+    if (!running) { running = true; requestAnimationFrame(step); }
+  }
+  function step() {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    for (var i = P.length - 1; i >= 0; i--) {
+      var p = P[i]; p.vy += .32; p.vx *= .985; p.x += p.vx; p.y += p.vy; p.r += p.vr; p.life++;
+      if (p.y > innerHeight + 40 || p.life > 260) { P.splice(i, 1); continue; }
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.w / 4, p.w, p.w / 2); ctx.restore();
+    }
+    if (P.length) requestAnimationFrame(step); else { running = false; ctx.clearRect(0, 0, innerWidth, innerHeight); }
+  }
+})();
+</script>
+</body>
+</html>
